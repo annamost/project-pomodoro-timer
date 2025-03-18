@@ -1,10 +1,5 @@
 "use strict";
-// Interface
-// interface Timer {
-//     duration: number,
-//     currentTime: string,
-//     isRunning: boolean,
-// }
+// Should the timer itself maybe be an interface? 
 // Enum
 var TimerState;
 (function (TimerState) {
@@ -19,12 +14,8 @@ const shortBreakBtn = document.getElementById('short-break');
 const longBreakBtn = document.getElementById('long-break');
 const startBtn = document.getElementById('start');
 const pauseBtn = document.getElementById('pause');
-const resetBtn = document.getElementById('reset');
-// let pomoTimer: Timer = {
-//     duration: 1500,
-//     currentTime: '25:00',
-//     isRunning: true,
-// }
+// const resetBtn = document.getElementById('reset') as HTMLButtonElement;
+// Setting up the timer duration and the interval
 let timeLeft;
 let interval;
 const updateTimer = () => {
@@ -35,6 +26,7 @@ const updateTimer = () => {
     // timerText.innerText = `${minutes}:${seconds}`
     timerText.innerText = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
 };
+// this is so the timer actually counts down
 const startTimer = () => {
     interval = setInterval(() => {
         timeLeft--;
@@ -47,9 +39,11 @@ const startTimer = () => {
         }
     }, 1000);
 };
+// this is to pause the timer
 const stopTimer = () => {
     clearInterval(interval);
 };
+// this was originally to reset the timer, but right now this one is disabled
 const resetTimer = (timerDur = TimerState.Pomodoro) => {
     clearInterval(interval);
     if (timerDur === TimerState.Pomodoro) {
@@ -63,28 +57,26 @@ const resetTimer = (timerDur = TimerState.Pomodoro) => {
     }
     updateTimer();
 };
+//  this is to set up the timer depending on what lenght you want 
 const setUpTimer = (timerDur) => {
-    console.log(timerDur);
     if (timerDur === TimerState.Pomodoro) {
         timeLeft = 1500;
-        console.log('Hello');
     }
     else if (timerDur === TimerState.ShortBreak) {
         timeLeft = 300;
     }
     else if (timerDur === TimerState.LongBreak) {
         timeLeft = 900;
-        console.log(timeLeft);
     }
-    console.log(timeLeft);
     updateTimer();
 };
 // asign the functions to the buttons
 startBtn.addEventListener("click", startTimer);
 pauseBtn.addEventListener("click", stopTimer);
-resetBtn.addEventListener("click", () => resetTimer());
+// resetBtn.addEventListener("click", () => resetTimer());
+// assign the functions to the different timer duration buttons
 pomodorBtn.addEventListener("click", () => setUpTimer(TimerState.Pomodoro));
 shortBreakBtn.addEventListener("click", () => setUpTimer(TimerState.ShortBreak));
 longBreakBtn.addEventListener("click", () => setUpTimer(TimerState.LongBreak));
-// Initial Set up? 
+// Initial Set up 
 setUpTimer(TimerState.Pomodoro);

@@ -1,9 +1,4 @@
-// Interface
-// interface Timer {
-//     duration: number,
-//     currentTime: string,
-//     isRunning: boolean,
-// }
+// Should the timer itself maybe be an interface? 
 // Enum
 enum TimerState {
     Pomodoro = 'pomodoro',
@@ -18,13 +13,9 @@ const shortBreakBtn = document.getElementById('short-break') as HTMLButtonElemen
 const longBreakBtn = document.getElementById('long-break') as HTMLButtonElement;
 const startBtn = document.getElementById('start') as HTMLButtonElement;
 const pauseBtn = document.getElementById('pause') as HTMLButtonElement;
-const resetBtn = document.getElementById('reset') as HTMLButtonElement;
+// const resetBtn = document.getElementById('reset') as HTMLButtonElement;
 
-// let pomoTimer: Timer = {
-//     duration: 1500,
-//     currentTime: '25:00',
-//     isRunning: true,
-// }
+// Setting up the timer duration and the interval
 let timeLeft: number;
 let interval: number;
 
@@ -39,6 +30,7 @@ const updateTimer = (): void => {
 
 }
 
+// this is so the timer actually counts down
 const startTimer = (): void => {
     interval = setInterval(() => {
         timeLeft--;
@@ -54,10 +46,12 @@ const startTimer = (): void => {
 
 }
 
+// this is to pause the timer
 const stopTimer = (): void => {
     clearInterval(interval);
 }
 
+// this was originally to reset the timer, but right now this one is disabled
 const resetTimer = (timerDur: TimerState = TimerState.Pomodoro): void => {
     clearInterval(interval);
     if (timerDur === TimerState.Pomodoro) {
@@ -74,30 +68,32 @@ const resetTimer = (timerDur: TimerState = TimerState.Pomodoro): void => {
 
 }
 
+//  this is to set up the timer depending on what lenght you want 
 const setUpTimer = (timerDur: TimerState): void => {
-    console.log(timerDur)
+
     if (timerDur === TimerState.Pomodoro) {
         timeLeft = 1500;
-        console.log('Hello')
+
     } else if (timerDur === TimerState.ShortBreak) {
         timeLeft = 300;
     } else if (timerDur === TimerState.LongBreak) {
         timeLeft = 900;
-        console.log(timeLeft)
+
     }
-    console.log(timeLeft)
+
     updateTimer()
 }
 
 // asign the functions to the buttons
 startBtn.addEventListener("click", startTimer);
 pauseBtn.addEventListener("click", stopTimer);
-resetBtn.addEventListener("click", () => resetTimer());
+// resetBtn.addEventListener("click", () => resetTimer());
 
+// assign the functions to the different timer duration buttons
 pomodorBtn.addEventListener("click", () => setUpTimer(TimerState.Pomodoro))
 shortBreakBtn.addEventListener("click", () => setUpTimer(TimerState.ShortBreak))
 longBreakBtn.addEventListener("click", () => setUpTimer(TimerState.LongBreak))
 
-// Initial Set up? 
+// Initial Set up 
 setUpTimer(TimerState.Pomodoro);
 
