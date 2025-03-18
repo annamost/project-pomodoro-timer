@@ -48,6 +48,7 @@ body {
     opacity: 1;
     margin: 0;
     color: white;
+    letter-spacing: 1px;
 }
 
 button {
@@ -60,6 +61,12 @@ button {
     font-weight: 400;
     font-style: normal;
     /* font-size: 14pt; */
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+
+button:hover {
+    transform: translateY(-10px);
 }
 
 /* footer {
