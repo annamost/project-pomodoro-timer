@@ -15,3 +15,4 @@ Next steps: Adding a reset button. Right now you can reset the timer by clicking
 
 ## View it live
 
+Project is deployed here: [Cloud Timer](https://cloudtimer.netlify.app)
