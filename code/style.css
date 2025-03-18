@@ -18,11 +18,50 @@ body {
     font-style: normal;
     height: 100vh;
     display: flex;
+    flex-direction: column;
+    gap: 20px;
     align-items: center;
     justify-content: center;
+
 }
 
 #pomo-container {
-    background-color: white;
-    grid-column: span(3, 9);
+    background-color: rgba(251, 182, 175, 0.5);
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 40px;
+    padding: 10px 5px;
+    min-width: 250px;
+    max-width: 400px;
 }
+
+#upper-button-container {
+    display: flex;
+    /* flex-direction: column; */
+    gap: 5px;
+}
+
+#timer {
+    font-size: 5em;
+    opacity: 1;
+    margin: 0;
+    color: white;
+}
+
+button {
+    background-color: rgba(226, 149, 185, 1);
+    border-radius: 40px;
+    border: none;
+    padding: 5px 10px;
+    color: white;
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    /* font-size: 14pt; */
+}
+
+/* footer {
+    margin-top: 100px;
+} */
