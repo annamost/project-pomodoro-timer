@@ -1,5 +1,4 @@
 "use strict";
-// Should the timer itself maybe be an interface? 
 // Enum
 var TimerState;
 (function (TimerState) {
@@ -14,7 +13,13 @@ const shortBreakBtn = document.getElementById('short-break');
 const longBreakBtn = document.getElementById('long-break');
 const startBtn = document.getElementById('start');
 const pauseBtn = document.getElementById('pause');
-// const resetBtn = document.getElementById('reset') as HTMLButtonElement;
+const resetBtn = document.getElementById('reset');
+// Set up the timers 
+let allTimers = [
+    { name: 'pomodoro', duration: 1500, isRunning: true },
+    { name: 'shortbreak', duration: 300, isRunning: false },
+    { name: 'longbreak', duration: 900, isRunning: false }
+];
 // Setting up the timer duration and the interval
 let timeLeft;
 let interval;
@@ -28,13 +33,19 @@ const updateTimer = () => {
 };
 // this is so the timer actually counts down
 const startTimer = () => {
+    // I need to first clear the interval..
+    if (interval !== undefined) {
+        clearInterval(interval);
+    }
     interval = setInterval(() => {
         timeLeft--;
         updateTimer();
         if (timeLeft === 0) {
             clearInterval(interval);
             alert("Time's Up!");
-            // timeLeft = 1500;
+            // now we reset the timer
+            let currentTimer = allTimers.findIndex((littletimer) => littletimer.isRunning == true);
+            timeLeft = allTimers[currentTimer].duration;
             updateTimer();
         }
     }, 1000);
@@ -44,36 +55,40 @@ const stopTimer = () => {
     clearInterval(interval);
 };
 // this was originally to reset the timer, but right now this one is disabled
-const resetTimer = (timerDur = TimerState.Pomodoro) => {
+const resetTimer = () => {
     clearInterval(interval);
-    if (timerDur === TimerState.Pomodoro) {
-        timeLeft = 1500;
-    }
-    else if (timerDur === TimerState.ShortBreak) {
-        timeLeft = 300;
-    }
-    else if (timerDur === TimerState.LongBreak) {
-        timeLeft = 900;
-    }
+    // checking which timer is currently running and then reseting the duration to that
+    let currentTimer = allTimers.findIndex((littletimer) => littletimer.isRunning == true);
+    timeLeft = allTimers[currentTimer].duration;
     updateTimer();
 };
 //  this is to set up the timer depending on what lenght you want 
 const setUpTimer = (timerDur) => {
+    // I change the is running state to true for the timer that is activated the other ones will be false
+    stopTimer();
     if (timerDur === TimerState.Pomodoro) {
-        timeLeft = 1500;
+        allTimers[0].isRunning = true;
+        allTimers[1].isRunning = false;
+        allTimers[2].isRunning = false;
     }
     else if (timerDur === TimerState.ShortBreak) {
-        timeLeft = 300;
+        allTimers[1].isRunning = true;
+        allTimers[0].isRunning = false;
+        allTimers[2].isRunning = false;
     }
     else if (timerDur === TimerState.LongBreak) {
-        timeLeft = 900;
+        allTimers[2].isRunning = true;
+        allTimers[1].isRunning = false;
+        allTimers[0].isRunning = false;
     }
+    let currentTimer = allTimers.findIndex((littletimer) => littletimer.isRunning == true);
+    timeLeft = allTimers[currentTimer].duration;
     updateTimer();
 };
 // asign the functions to the buttons
 startBtn.addEventListener("click", startTimer);
 pauseBtn.addEventListener("click", stopTimer);
-// resetBtn.addEventListener("click", () => resetTimer());
+resetBtn.addEventListener("click", () => resetTimer());
 // assign the functions to the different timer duration buttons
 pomodorBtn.addEventListener("click", () => setUpTimer(TimerState.Pomodoro));
 shortBreakBtn.addEventListener("click", () => setUpTimer(TimerState.ShortBreak));
